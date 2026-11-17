@@ -1,0 +1,13 @@
+name: solo25-corescan
+services:
+  web:
+    build: .
+    image: solo25-corescan:1.0
+    ports: ["18925:18925"]
+    volumes: ["corescan-data:/data"]
+    environment:
+      CORESCAN_DATA_DIR: /data
+      PORT: 18925
+    restart: unless-stopped
+volumes:
+  corescan-data:
