@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CoreScan · 平行束重建</title><link rel="stylesheet" href="/static/core.css">
+<style>.recon-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.curation{max-height:420px;overflow:auto}.curation td input[type=number]{width:88px}.badge{padding:2px 8px;border-radius:10px;font-size:11px}.badge.curating{background:#5a4a1d}.badge.reconstructed{background:#1d4a5a}.badge.confirmed{background:#2e7e70}.thumb{width:150px;height:110px;object-fit:contain;background:#0d1720}.evidence-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.evidence-grid figure{margin:0}.evidence-grid img{width:100%;height:200px;object-fit:contain;background:#0d1720}.small{font-size:12px;color:#94aabb}.warn{background:#4a3520;border:1px solid #8a6a3a;border-radius:8px;padding:10px;margin:8px 0}.frozen{background:#223f39;border:1px solid #3d7a6d;border-radius:8px;padding:10px;margin:8px 0}</style>
+</head><body><header><div><b>CoreScan</b><span>原始平行束投影 · 重建工作台</span></div><nav><a href="/">三维体检查</a><a href="/prepare">二维图像准备</a><button id="newProject">新建检查项目</button></nav></header>
+<div id="notice" role="status">新建或选择检查项目后，上传投影ZIP（projections/、dark/、flat/）和角度表CSV开始重建。</div>
+<main><aside><h2>检查项目</h2><select id="projects"></select><button id="reload">刷新</button><h2>新建重建会话</h2><details open><summary>上传原始投影与几何设置</summary>
+<div class="hint small">ZIP 内 projections/ 放灰度投影（行=相同轴向位置），dark/ 与 flat/ 放同尺寸暗场空场；角度表列为 文件名,角度(度)，按文件名配对，允许角度重复、缺失。单包不超过96MB。</div>
+<label>投影 ZIP<input type="file" id="bundle"></label><label>角度表 CSV<input type="file" id="angles"></label>
+<label>几何与校正参数（JSON）<textarea id="newSettings" style="min-height:150px">{
+  "du_mm": 0.3,
+  "dz_mm": 0.55,
+  "center": 64,
+  "direction": 1,
+  "truncate_border": 0,
+  "saturation": null,
+  "transmission_floor": 0.0001,
+  "grid_n": 64,
+  "dx_mm": 0.3,
+  "lambda_smooth": 0.05,
+  "iterations": 15,
+  "fbp_window": "hann"
+}</textarea></label>
+<button class="primary" id="createSession">创建会话并校正暗空场</button></details>
+<h2>重建会话</h2><div id="sessions" class="curation"></div></aside>
+<section class="workspace"><div class="heading"><div><h1 id="title">投影重建</h1><p id="subtitle">逐张核对 · 双方案独立证据 · 支持范围与往返残差</p></div><div><button id="downloadSession">下载会话证据ZIP</button><button id="cloneSession">克隆会话（试新设置）</button></div></div>
+<div id="sessionPanel"><div class="panel"><p class="hint">尚未选择会话。创建后可逐张核对角度配对、剔除坏投影、指定独立留出投影，并查看暗场空场校正后的有效射线；无效计数与缺角不会被当作零吸收。</p></div></div>
+<footer>更低拟合误差或更平滑不自动代表更可信；请依据留出投影一致性、小孔薄壁条纹、边缘损失与可靠支持范围裁决。角度不足、中心错误或截断导致的未决区域保留为无效，不把约束补出的结构标为已证实。</footer>
+</section></main><script src="/static/recon.js"></script></body></html>

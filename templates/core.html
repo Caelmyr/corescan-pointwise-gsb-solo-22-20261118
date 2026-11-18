@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CoreScan · 工业切片检查</title><link rel="stylesheet" href="/static/core.css"></head>
-<body><header><div><b>CoreScan</b><span>工业切片 · 体数据检查台</span></div><nav><a href="/prepare">二维图像准备</a><button id="demo">载入合成铸件</button><button id="new">新建项目</button></nav></header>
+<body><header><div><b>CoreScan</b><span>工业切片 · 体数据检查台</span></div><nav><a href="/recon">原始投影重建</a><a href="/prepare">二维图像准备</a><button id="demo">载入合成铸件</button><button id="new">新建项目</button></nav></header>
 <div id="notice" role="status">导入切片体或载入合成铸件开始检查。所有体坐标均按 Z / Y / X 顺序。</div>
 <main><aside><h2>检查项目</h2><select id="projects" aria-label="检查项目"></select><button id="reload">刷新项目</button><h2>体数据</h2><div class="hint">勾选参与处理的数据；点击名称查看正交切片。双体比较按勾选顺序。</div><div id="volumes"></div><details><summary>导入 NPY / NPZ / 切片 ZIP</summary><input type="file" id="uploadFile"><label>元信息覆盖（留 {} 沿用文件；无元信息时默认1mm）<textarea id="uploadMeta">{}</textarea></label><button id="upload">导入体数据</button></details><h2>处理历史</h2><div id="runs"></div></aside>
 <section class="workspace"><div class="heading"><div><h1 id="title">工业体数据检查</h1><p id="subtitle">正交切面 · 物理体积 · 有效支持</p></div><div><button id="downloadVolume">导出当前体</button><button id="snapshot">保存检查快照</button><button id="exportProject">导出项目</button></div></div>

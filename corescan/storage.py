@@ -166,6 +166,9 @@ class Store:
         for run in doc['runs']:
             keys.update(run['images'].values())
             keys.update(run['maps'].values())
+        for session in doc.get('recon_sessions', []):
+            for group in session['arrays'].values():
+                keys.update(group.values())
         with zipfile.ZipFile(output, 'w', zipfile.ZIP_DEFLATED) as archive:
             archive.writestr('project.json', json.dumps(doc, ensure_ascii=False, indent=2))
             for key in sorted(keys):
